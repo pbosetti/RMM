@@ -136,10 +136,14 @@ loop()
     print_status();
   }
   
-  if (digitalRead(MOTOR_CTRL) == HIGH and millis() > last_time + 200) {
+  static bool latch = false;
+  if (digitalRead(MOTOR_CTRL) == HIGH and millis() > last_time + 500 and not latch ) {
     motor = ! motor;
     last_time = millis();
+    latch = true;
   }
+  if (digitalRead(MOTOR_CTRL) == LOW and latch)
+    latch = false;
   digitalWrite(RELAY, motor ? HIGH : LOW);
   
   delay(g_delay);
