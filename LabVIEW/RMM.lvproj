@@ -24,6 +24,7 @@
 			<Item Name="Motor.vi" Type="VI" URL="../Motor.vi"/>
 			<Item Name="Pulses.vi" Type="VI" URL="../Pulses.vi"/>
 			<Item Name="SineFit.vi" Type="VI" URL="../SineFit.vi"/>
+			<Item Name="Globals.vi" Type="VI" URL="../../../../Documenti/Globals.vi"/>
 		</Item>
 		<Item Name="PhantomDisplacementSensor.vi" Type="VI" URL="../PhantomDisplacementSensor.vi"/>
 		<Item Name="RunMe.vi" Type="VI" URL="../RunMe.vi"/>
@@ -46,7 +47,7 @@
 				<Item Name="VISA Configure Serial Port (Serial Instr).vi" Type="VI" URL="/&lt;vilib&gt;/Instr/_visa.llb/VISA Configure Serial Port (Serial Instr).vi"/>
 				<Item Name="whitespace.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/whitespace.ctl"/>
 			</Item>
-			<Item Name="lvanlys.dll" Type="Document" URL="../../../../../Programmi/National Instruments/LabVIEW 2011/resource/lvanlys.dll"/>
+			<Item Name="lvanlys.dll" Type="Document" URL="../../../../../../Programmi/National Instruments/LabVIEW 2011/resource/lvanlys.dll"/>
 		</Item>
 		<Item Name="Build Specifications" Type="Build">
 			<Item Name="RMM" Type="EXE">
