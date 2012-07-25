@@ -3,6 +3,8 @@ Software for Roundness Measuring Machine
 
 This project hosts the code under development for the controller for a Roundness Measuring Machine developed at Stanford PRL.
 
+**To download:** use git or get the zipball [here](https://github.com/pbosetti/RMM/zipball/master)
+
 Content
 =======
 The `counter` folder contains the [Arduino](http://arduino.cc) firmware developed for controlling the spindle AC motor and for reading the rotary encoder [HEDS-9140](http://www.avagotech.com/docs/AV02-1132EN).
