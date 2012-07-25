@@ -49,7 +49,7 @@ The firmware is designed to have a small set of digital I/O providing user feedb
 
 *Note*: all LED must be protected from overcurrent with a 220 Ohm resistor in series.
 
-<a href="https://github.com/downloads/pbosetti/RMM/counter_bb.png" target=blank><img src="https://github.com/downloads/pbosetti/RMM/counter_bb.png" width=400 alt="Arduino-based breadboard"></a>
+<a href="https://github.com/downloads/pbosetti/RMM/counter_bb.png" target=blank><img src="https://github.com/downloads/pbosetti/RMM/counter_bb.png" width=600 alt="Arduino-based breadboard"></a>
 
 Author
 ======
