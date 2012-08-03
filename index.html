@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Rmm by pbosetti</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Rmm</h1>
+        <h2>Controller for the Stanford PRL Roundness Measuring Machine</h2>
+        <a href="https://github.com/pbosetti/RMM" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Software for Roundness Measuring Machine</h1>
+
+<p>This project hosts the code under development for the controller for a Roundness Measuring Machine developed at Stanford PRL.</p>
+
+<p><strong>To download:</strong> use git or get the zipball <a href="https://github.com/pbosetti/RMM/zipball/master">here</a></p>
+
+<h1>Content</h1>
+
+<p>The <code>counter</code> folder contains the <a href="http://arduino.cc">Arduino</a> firmware developed for controlling the spindle AC motor and for reading the rotary encoder <a href="http://www.avagotech.com/docs/AV02-1132EN">HEDS-9140</a>.</p>
+
+<p>The <code>LabVIEW</code> folder contains the LabVIEW project that reads data from the Arduino and from the linear displacement gauge.</p>
+
+<p>The <code>docs</code> folder contains the documentation. In particular, the <code>counter.fzz</code> file is a sketch representing the breadboard wiring for the Arduino board, prepared and readable with <a href="http://fritzing.org">Fritzing</a>.</p>
+
+<h1>Arduino firmware</h1>
+
+<p>The Arduino firmware (<code>counter/counter.ino</code>) is designed to be connected to the HEDS-9140 rotary encoder with a 5 poles cable. The <a href="http://www.avagotech.com/docs/AV02-1132EN">spec sheet</a> reports the meaning of the 5 wires.</p>
+
+<p>The firmware holds a global counter that counts the pulses and resets the count to zero at every turn. The artwork used with the counter can have different resolutions (ie number of pulses). Before compiling and uploading the firmware it <strong>must be checked</strong> that the preproc directive <code>STEPS</code> corresponds to the actual number of pulses <strong>minus one</strong> (the counter runs on 0-base).</p>
+
+<h2>Communication</h2>
+
+<p>The firmware can communicate with the USB host via serial communication at 115200 baud. The communication is ASCII-based and follows the same syntax:</p>
+
+<ul>
+<li>
+<code>i</code>: print out a device ID string</li>
+<li>
+<code>nnd</code>: set the loop delay to <code>nn</code> milliseconds (in range 1--1000)</li>
+<li>
+<code>/</code>: toggle between polling and continuous data flow. When in continuous mode, it routinely prints the current readings (the rate is set with the <code>nnd</code> command above, default to 10 ms)</li>
+<li>
+<code>p</code>: return the number of pulses of the configured artwork</li>
+<li>
+<code>p</code>: when in polling mode, return the current counter status string</li>
+<li>
+<code>M</code>: turn te relay controlling the AC motor on</li>
+<li>
+<code>m</code>: turn te relay controlling the AC motor off</li>
+</ul><p>In both polling and continuous mode, the status string has four space-separated fields that have the following meanings:</p>
+
+<ol>
+<li>the first field is either 0 (homing <em>not</em> done yet) or 1 (homing done); it goes from 0 to 1 after the first incomplete turn, so the angular position is only reliable when this field is 1</li>
+<li>reset. This field cycles from 0 to 1 every turn (0 the first run, 1 the second, 0 the third and so on). When it changes, a new turn is just begun</li>
+<li>the actual counter, ranging from 0 to STEPS</li>
+<li>the curent rotational velocity <strong>CODE NOT RELIABLE YET!</strong>
+</li>
+</ol><p>This simple protocol is used in the LabVIEW code for controlling the motor and readin the angular position.</p>
+
+<h2>Hardware</h2>
+
+<p>The firmware is designed to have a small set of digital I/O providing user feedback and auxiliary functions.</p>
+
+<ul>
+<li>
+<strong>Digital pin 5</strong>: it is supposed to drive on/off the relay that controls the AC motor. The Fritzing sketch also shows an LED in parallel to the motor relay</li>
+<li>
+<strong>Digital pin 6</strong>: this pin provides user feedback about the HEDS-9140 encoder: when an LED is connected to this pin, it will toggle on and off at every pulse and--when on--its brightness will range from 0 to max as the counter goes from 0 to STEPS</li>
+<li>
+<strong>Digital pin 7</strong>: this pin is supposed to be connected to a pushbutton as shown in the sketch. Temporarily bringing this pin to HIGH (ie pushing the button) will toggle the motor on and off. <em>If not used, this pin MUST be grounded</em>
+</li>
+<li>
+<strong>Digital pin 13</strong>: this pin should be connected to a red LED, which will stay on until the first turn would be completed (ie homing performed).</li>
+</ul><p><em>Note</em>: all LED must be protected from overcurrent with a 220 Ohm resistor in series.</p>
+
+<p><a href="https://github.com/downloads/pbosetti/RMM/counter_bb.png" target="blank"><img src="https://github.com/downloads/pbosetti/RMM/counter_bb.png" width="600" alt="Arduino-based breadboard"></a></p>
+
+<h1>Author</h1>
+
+<p>Paolo Bosetti</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/pbosetti/RMM/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/pbosetti/RMM/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/pbosetti/RMM"></a> is maintained by <a href="https://github.com/pbosetti">pbosetti</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
